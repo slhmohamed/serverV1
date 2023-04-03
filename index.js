@@ -4,9 +4,12 @@ const connection=require('./DB/db.js');
 const userRoute=require('./routes/user.routes');
 const authRouter=require('./routes/auth.route')
 const entrepriseRoute=require('./routes/entreprise.route')
+const cors=require('cors')
 require('dotenv').config();
 const bodyParser=require('body-parser');
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(cors())
+
  connection();
 app.use('/api/user',userRoute);
 app.use('/api/auth',authRouter);
