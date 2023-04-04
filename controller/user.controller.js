@@ -13,7 +13,8 @@ exports.addUser = async (req, res) => {
             prenom: req.body.prenom,
             email: req.body.email,
             password: hashPassword,
-            telephone: req.body.telephone
+            telephone: req.body.telephone,
+            role:req.body.role
         })
         await newUser.save();
         return res.status(200).send({ data: newUser, message: 'User added' })
@@ -23,7 +24,7 @@ exports.addUser = async (req, res) => {
     }
 }
 exports.getAllUser = async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().select('-password');
     res.status(200).send({ data: users })
 }
 
@@ -56,7 +57,8 @@ exports.updateUser = async (req, res) => {
                 prenom: req.body.prenom,
                 email: req.body.email,
                 telephone: req.body.telephone,
-                password: hashPaswword
+                password: hashPaswword,
+                role:req.body.role
             }
         } else {
             updateObj = {
@@ -64,6 +66,7 @@ exports.updateUser = async (req, res) => {
                 prenom: req.body.prenom,
                 email: req.body.email,
                 telephone: req.body.telephone,
+                role:req.body.role
 
             }
         }
@@ -74,4 +77,11 @@ exports.updateUser = async (req, res) => {
         console.log(error);
         return res.status(400).send({ errors: error })
     }
+}
+
+exports.searchUser=async(req,res)=>{
+ 
+    const users= await User.find()
+    .or([{ nom: { $regex: req.params.key, $options: 'i' } }, { prenom: { $regex: req.params.key, $options: 'i' } }, { email: { $regex: req.params.key, $options: 'i' } }])
+res.status(200).send({data:users})
 }

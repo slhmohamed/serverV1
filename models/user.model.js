@@ -26,6 +26,10 @@ const userSchema=new mongoose.Schema({
     },
     resetPasswordLink:{
         type:String
+    },
+    role:{
+        type:String,
+        enum: ['Ministre', 'SuperAmdin','Invite','Unite']
     }
 },{
     timestamps:true
