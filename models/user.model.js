@@ -29,7 +29,7 @@ const userSchema=new mongoose.Schema({
     },
     role:{
         type:String,
-        enum: ['Ministre', 'SuperAmdin','Invite','Unite']
+        enum: ['Ministre', 'SuperAdmin','Invite','Unite','Visiteur']
     }
 },{
     timestamps:true

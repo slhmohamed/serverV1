@@ -12,14 +12,14 @@ exports.signin = async (req, res) => {
   //check if user exist with email send for user 
   const user = await User.findOne({ email: req.body.email })
   if (!user) {
-    return res.status(400).send({ errors: "user not found with this email.Please try again" })
+    return res.status(400).send({ errors: "Utilisateur introuvable avec cet email. veuillez réessayer" })
   }
 
   const compare = await bcrypt.compare(req.body.password, user.password)
   //compare password user and password send for user 
   if (!compare) {
     return res.status(400).json({
-      errors: 'Email and password do not match'
+      errors: 'Email ou le mot de passe ne correspondent pas'
     });
   }
   // generate a token and send to client
@@ -83,10 +83,12 @@ exports.forgotPasswordController = async (req, res) => {
     let transporter = nodemailer.createTransport({
 
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       // true for 465, false for other ports 
-      auth: { user: "eventpfe9@gmail.com", pass: "i l s p x u w h m e n k q u l z" }
+      auth: { 
+      user: "eventpfe74@gmail.com",
+       pass: "pvcgubhwkrmnprsj" }
     });
     let info = await transporter.sendMail(mailOptions);
     if (info) {
