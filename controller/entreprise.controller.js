@@ -16,3 +16,13 @@ exports.getAll=async(req,res)=>{
 
     res.status(200).send({data:listes})
 }
+
+exports.deleteEntreprise=async(req,res)=>{
+    const id = req.params.id;
+    try{
+        await Entreprise.findByIdAndRemove(id)
+        res.status(200).json("Company has been deleted");
+    }catch(err){
+        res.status(400).send({errors:err})
+    }
+}

@@ -24,7 +24,7 @@ exports.signin = async (req, res) => {
   }
   // generate a token and send to client
   const token = jwt.sign({
-    _id: user._id, email: user.email
+    _id: user._id, email: user.email,role:user.role,username:user.nom +' ' + user.prenom
   },
     process.env.secretOrPrivateKey,
     {

@@ -30,7 +30,7 @@ exports.getAllUser = async (req, res) => {
 
 exports.getSingleUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id).select('-password')
         res.status(200).send({ data: user });
     } catch (error) {
         console.log(error);
