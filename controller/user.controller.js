@@ -85,3 +85,12 @@ exports.searchUser=async(req,res)=>{
     .or([{ nom: { $regex: req.params.key, $options: 'i' } }, { prenom: { $regex: req.params.key, $options: 'i' } }, { email: { $regex: req.params.key, $options: 'i' } }])
 res.status(200).send({data:users})
 }
+exports.updateAvatar=async(req,res)=>{
+  let obj={
+    avatar:req.file.path
+  }
+  const result = await User.findByIdAndUpdate(req.params.id, { $set: obj })
+  res.status(200).send({ data: req.file.path, message: 'User  avatar updated' })
+
+res.status(200).send({data:users})
+}

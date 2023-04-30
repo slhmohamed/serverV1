@@ -17,10 +17,10 @@ exports.getAll= async(req, res)=>{
 
 exports.getShow= async(req, res)=>{
     const id =   req.params.id
-    const event = await Event.findById(id);
+    const event = await Event.findById(id) .populate({ path: "remarque.sender", select: "nom prenom" })
  
     try{
-       res.status(200).json(event)
+       res.status(200).send({data:event})
 
       
     }catch(err){
@@ -76,3 +76,17 @@ exports.deleteEvent= async(req, res)=>{
     }
 
 }
+exports.addComment=async(req,res)=>{
+
+    let obj={
+        sender:req.body.sender,
+     comment:req.body.comment
+    }
+    
+ let event=await Event.findById(req.body.eventId);
+ 
+ event?.remarque.push(obj)
+  event.save();
+ res.status(200).send({  message: 'desicion updated' })
+  
+ }

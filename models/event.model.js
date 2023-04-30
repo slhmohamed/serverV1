@@ -1,7 +1,10 @@
 const moment = require("moment");
 const mongoose = require("mongoose");
 
-
+const remarqueSchema=new mongoose.Schema({
+  sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  comment: {type:String},
+})
 const EventSchema = new mongoose.Schema({
     title: {type: String, required: [true, "Please write a title for your event"]},
     start: {
@@ -23,6 +26,8 @@ const EventSchema = new mongoose.Schema({
     },
     },
     describe: { type: String},
+ 
+    remarque:[remarqueSchema]
 })
 
 

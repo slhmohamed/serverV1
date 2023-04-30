@@ -24,7 +24,7 @@ exports.signin = async (req, res) => {
   }
   // generate a token and send to client
   const token = jwt.sign({
-    _id: user._id, email: user.email,role:user.role,username:user.nom +' ' + user.prenom
+    _id: user._id, email: user.email,role:user.role,username:user.nom +' ' + user.prenom,avatar:user.avatar
   },
     process.env.secretOrPrivateKey,
     {
@@ -56,7 +56,7 @@ exports.forgotPasswordController = async (req, res) => {
   );
 
   const mailOptions = {
-    from: process.env.EMAIL_FROM,
+    from: 'pfemayssa@gmail.com',
     to: email,
     subject: `Password Reset link`,
     html: `
@@ -80,16 +80,14 @@ exports.forgotPasswordController = async (req, res) => {
   } else {
 
 
-    let transporter = nodemailer.createTransport({
-
-      host: "smtp.gmail.com",
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
       port: 587,
-      secure: false,
-      // true for 465, false for other ports 
-      auth: { 
-      user: "eventpfe74@gmail.com",
-       pass: "pvcgubhwkrmnprsj" }
-    });
+      auth: {
+          user: 'myrtie93@ethereal.email',
+          pass: '123456mayssa'
+      }
+  });
     let info = await transporter.sendMail(mailOptions);
     if (info) {
       console.log('SIGNUP EMAIL SENT', info)

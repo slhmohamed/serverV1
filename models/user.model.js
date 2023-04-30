@@ -30,6 +30,10 @@ const userSchema=new mongoose.Schema({
     role:{
         type:String,
         enum: ['Ministre', 'SuperAdmin','Invite','Unite','Visiteur']
+    },
+    avatar:{
+        type:String,
+        default:''
     }
 },{
     timestamps:true
