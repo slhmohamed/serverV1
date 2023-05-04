@@ -5,7 +5,7 @@ exports.newPV = async (req, res) => {
     try {
         const newPV = new PV({
             rapport: req.file.path,
-            date: req.body.date,
+            
             sujet: req.body.sujet,
             event: req.body.event
         })

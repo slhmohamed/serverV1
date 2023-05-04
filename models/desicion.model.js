@@ -3,13 +3,12 @@
 
 
 const DesicionSchema = new mongoose.Schema({
-    event: {type: mongoose.Schema.Types.ObjectId, ref: 'Event'},
+    dateLancement: {type:Date},
     responsable: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     sujet: {type:String},
-    date: {type:Date},
+    dateExecution: {type:Date},
     status:{
-        type:String,
-        default:'Pas encore'
+        type:String 
     }
     
   }, {timestamps:true});

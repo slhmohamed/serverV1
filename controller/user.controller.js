@@ -58,7 +58,7 @@ exports.updateUser = async (req, res) => {
                 email: req.body.email,
                 telephone: req.body.telephone,
                 password: hashPaswword,
-                role:req.body.role
+                 
             }
         } else {
             updateObj = {
@@ -66,8 +66,7 @@ exports.updateUser = async (req, res) => {
                 prenom: req.body.prenom,
                 email: req.body.email,
                 telephone: req.body.telephone,
-                role:req.body.role
-
+              
             }
         }
         const result = await User.findByIdAndUpdate(req.params.id, { $set: updateObj })

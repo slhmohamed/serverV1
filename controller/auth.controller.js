@@ -81,11 +81,12 @@ exports.forgotPasswordController = async (req, res) => {
 
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      port: 587,
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // use TLS
       auth: {
-          user: 'myrtie93@ethereal.email',
-          pass: '123456mayssa'
+          user: 'pfemayssa@gmail.com',
+          pass: 'denfbsivunbtualr'
       }
   });
     let info = await transporter.sendMail(mailOptions);
