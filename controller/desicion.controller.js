@@ -30,8 +30,7 @@ exports.getAll = async (req, res) => {
 exports.getDesicion = async (req, res) => {
     const desicion = await Desicion.findById(req.params.id)
         .populate({ path: "responsable", select: "nom prenom" })
-        .populate({ path: "event", select: 'title' })
-
+ 
     res.status(200).send({ data: desicion })
 }
 
@@ -62,14 +61,12 @@ exports.getDesicions = async (req, res) => {
     {
     const desicions = await Desicion.find()
         .populate({ path: "responsable", select: "nom prenom" })
-        .populate({ path: "event", select: 'title' })
-
+ 
     res.status(200).send({ data: desicions })
 }else{
     const desicions = await Desicion.find({status:req.params.param})
     .populate({ path: "responsable", select: "nom prenom" })
-    .populate({ path: "event", select: 'title' })
-
+ 
 res.status(200).send({ data: desicions })
 }
 }
@@ -77,8 +74,7 @@ res.status(200).send({ data: desicions })
 exports.getSingle=async(req,res)=>{
     const desicion = await Desicion.find({event:req.params.id})
     .populate({ path: "responsable", select: "nom prenom" })
-    .populate({ path: "event", select: 'title' })
-
+ 
 res.status(200).send({ data: desicion })
 
 }

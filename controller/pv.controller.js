@@ -33,6 +33,8 @@ exports.getPV = async (req, res) => {
 }
 
 exports.updatePV = async (req, res) => {
+
+    console.log(req.file.path);
     try {
         let updateObj = {}
 
@@ -40,15 +42,24 @@ exports.updatePV = async (req, res) => {
 
         updateObj = {
            // responsable: req.body.responsable,
-            date: req.body.date,
-            sujet: req.body.sujet,
-            status:req.body.status
+ 
+             rapportFinale: req.file.path
         }
 
-        const result = await Desicion.findByIdAndUpdate(req.params.id, { $set: updateObj })
-        res.status(200).send({ data: result, message: 'desicion updated' })
+        const result = await PV.findByIdAndUpdate(req.params.id, { $set: updateObj })
+        res.status(200).send({ data: result, message: 'pv updated' })
     }
     catch (error) {
+        console.log(error);
+        return res.status(400).send({ errors: error })
+    }
+}
+
+exports.deletePV = async (req, res) => {
+    try {
+        const deletePV = await PV.findOneAndRemove(req.params.id);
+        res.status(200).send({ message: "PV deleted" });
+    } catch (error) {
         console.log(error);
         return res.status(400).send({ errors: error })
     }

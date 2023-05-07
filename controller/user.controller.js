@@ -93,3 +93,17 @@ exports.updateAvatar=async(req,res)=>{
 
 res.status(200).send({data:users})
 }
+
+module.exports.getAllUsers = async (req, res, next) => {
+    try {
+      const users = await User.find({ _id: { $ne: req.params.id } }).select([
+        "email",
+        "nom","prenom",
+        "avatar",
+        "_id",
+      ]);
+      return res.json(users);
+    } catch (ex) {
+      next(ex);
+    }
+  };
