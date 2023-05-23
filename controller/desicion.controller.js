@@ -1,6 +1,5 @@
 const Desicion = require("../models/desicion.model");
-
-
+const Log = require("../models/log.model");
 exports.newDesicion = async (req, res) => {
     try {
         const newDesicion = new Desicion({
@@ -11,6 +10,10 @@ exports.newDesicion = async (req, res) => {
            dateExecution: req.body.dateExecution,
 
         })
+        const newLog=new Log({
+            action:'Un desicion a été créée.'
+        })
+        newLog.save()
         await newDesicion.save();
         res.status(200).send({ message: 'Desicion ajouté' })
     } catch (error) {
@@ -72,11 +75,31 @@ res.status(200).send({ data: desicions })
 }
 
 exports.getSingle=async(req,res)=>{
-    const desicion = await Desicion.find({event:req.params.id})
+    console.log(req.params.id);
+    const desicion = await Desicion.find()
     .populate({ path: "responsable", select: "nom prenom" })
- 
 res.status(200).send({ data: desicion })
+}
 
+exports.updateStatus=async(req,res)=>{
+    try {
+        let updateObj = {}
+console.log(req.body);
+
+
+        updateObj = {
+            status: req.body.value,
+           
+        }
+
+        const result = await Desicion.findByIdAndUpdate(req.params.id, { $set: updateObj })
+        res.status(200).send({ data: result, message: 'desicion updated' })
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(400).send({ errors: error })
+    }
 }
 
 
+ 

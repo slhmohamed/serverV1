@@ -1,5 +1,6 @@
 const PV = require("../models/pv.model");
 
+const Log = require("../models/log.model");
 
 exports.newPV = async (req, res) => {
     try {
@@ -9,6 +10,11 @@ exports.newPV = async (req, res) => {
             sujet: req.body.sujet,
             event: req.body.event
         })
+        const newLog=new Log({
+            action:'Un PV a été créée.'
+        })
+
+        newLog.save();
         console.log(newPV);
         await newPV.save();
         res.status(200).send({ message: 'PV ajouté' })

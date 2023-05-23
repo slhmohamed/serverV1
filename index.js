@@ -10,6 +10,8 @@ const pvRoute=require('./routes/pv.route.js');
 const statRoute=require('./routes/stats.route.js');
 const messageRoutes = require("./routes/message.route.js");
 
+const logRoutes=require('./routes/log.route.js')
+
  
 const cors=require('cors')
 require('dotenv').config();
@@ -27,6 +29,7 @@ app.use('/api/event',eventRoute);
 app.use('/api/desicion',desicionRoute);
 app.use('/api/pv',pvRoute);
 app.use('/api/stat',statRoute);
+app.use('/api/log',logRoutes);
 app.use('/upload',express.static(__dirname+'/upload'));
  
 const socket = require("socket.io");

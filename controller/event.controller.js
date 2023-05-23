@@ -1,6 +1,9 @@
  
 const Event = require("../models/event.model");
- 
+ const User=require('../models/user.model');
+ const nodemailer=require('nodemailer')
+ const Log = require("../models/log.model");
+
 exports.getAll= async(req, res)=>{
 
     const events = await Event.find({});
@@ -35,8 +38,48 @@ exports.getShow= async(req, res)=>{
      
         try{
            await newEvent.save()
+           const users=await User.find();
+           const mailOptions = {
+            from: 'pfemayssa@gmail.com',
+            to: users,
+            subject: `New event`,
+            html: `
+                              <h1>New event created : ${req.body.title}</h1>
+                              <p>Start in :${req.body.start}/resetPassword/${token}</p>
+                              <hr />
+                               
+                          `
+          };
+        
+           
                
-            res.status(200).send({data:newEvent})
+          const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // use TLS
+            auth: {
+                user: 'pfemayssa@gmail.com',
+                pass: 'denfbsivunbtualr'
+            }
+        });
+        const newLog=new Log({
+          action:'Un Event a été créée.'
+      })
+          let info = await transporter.sendMail(mailOptions);
+          if (info) {
+            console.log('SIGNUP EMAIL SENT', info)
+            return res.json({
+              message: `Event has been created and Email has been sent to all users .`
+            });
+          }
+          else {
+            console.log(err);
+            // console.log('SIGNUP EMAIL SENT ERROR', err)
+            return res.json({
+              message: err.message
+            });
+      
+          }
                  
             
         }catch(err){
@@ -79,13 +122,14 @@ exports.deleteEvent= async(req, res)=>{
 exports.addComment=async(req,res)=>{
 
     let obj={
-        sender:req.body.sender,
+    sender:req.body.sender,
      comment:req.body.comment
     }
     
  let event=await Event.findById(req.body.eventId);
  
  event?.remarque.push(obj)
+ console.log(event);
   event.save();
  res.status(200).send({  message: 'desicion updated' })
   

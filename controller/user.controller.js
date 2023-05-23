@@ -1,6 +1,9 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+const Log = require("../models/log.model");
+
 exports.addUser = async (req, res) => {
     try {
         const existe = await User.findOne({ email: req.body.email });
@@ -16,6 +19,13 @@ exports.addUser = async (req, res) => {
             telephone: req.body.telephone,
             role:req.body.role
         })
+
+        const newLog=new Log({
+            action:'Un utilisateur a été créée.'
+        })
+
+        newLog.save();
+
         await newUser.save();
         return res.status(200).send({ data: newUser, message: 'User added' })
     } catch (error) {

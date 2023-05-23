@@ -70,10 +70,9 @@ exports.forgotPasswordController = async (req, res) => {
 
   const update = await user.updateOne({ resetPasswordLink: token })
 
-
+ 
   if (!update) {
-    console.log('RESET PASSWORD LINK ERROR', err);
-    return res.status(400).json({
+     return res.status(400).json({
       error:
         'Database connection error on user password forgot request'
     });
@@ -128,9 +127,9 @@ exports.resetPasswordController = async(req, res) => {
             error: 'Expired link. Try again'
           });
         }
-        console.log(req.body.newPassword);
+        console.log(req.body.resetPasswordLink);
        var user=await User.findOne({resetPasswordLink:req.body.resetPasswordLink})
-          
+          console.log(user);
             if (!user) {
               return res.status(400).json({
                 error: 'Something went wrong. Try later'
@@ -145,13 +144,14 @@ exports.resetPasswordController = async(req, res) => {
 
             user = _.extend(user, updatedFields);
 
-          const save=await  user.save()  
+          const save=await  user.save();
+          console.log(save);  
               if (!save) {
                 return res.status(400).json({
                   error: 'Error resetting user password'
                 });
               }
-              res.json({
+              res.status(200).send({
                 message: `Great! Now you can login with your new password`
               });
              

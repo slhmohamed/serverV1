@@ -2,6 +2,7 @@ const User=require('../models/user.model');
 const Event=require('../models/event.model');
 const Entreprise=require('../models/entreprise.model');
 const { F } = require('lodash/fp');
+const Desicion=require('../models/desicion.model');
 
 
 exports.statsController=async(req,res)=>{
@@ -34,7 +35,7 @@ exports.chart=async(req,res)=>{
  
         let dateS=new Date(el.start);
          let dateE=new Date(el.end);
-        console.log(dateS.getMonth()+1);
+        
 
         switch (dateS.getMonth()+1){
             case 1: j++ ; break;
@@ -79,7 +80,18 @@ let arr=[];
  arr.push(oc);
  arr.push(nov);
  arr.push(dec);
- console.log(arr);
- res.status(200).send({data:arr})
+ let chartP=[];
+
+
+ 
+const pE=await Desicion.find({status:'Pas encore'})
+const eC=await Desicion.find({status:'En cours'})
+const termine=await Desicion.find({status:'Termine'})
+
+chartP.push(pE?.length)
+chartP.push(eC?.length)
+chartP.push(termine?.length)
+
+ res.status(200).send({data:arr,chartP:chartP})
      
 }
