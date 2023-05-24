@@ -5,4 +5,4 @@ exports.getAlllog = async (req, res) => {
     res.status(200).send({ data: logs })
 }
  
- 
+  
