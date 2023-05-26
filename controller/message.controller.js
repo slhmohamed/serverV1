@@ -25,7 +25,7 @@ console.log(from);
 
 module.exports.addMessage = async (req, res, next) => {
   try {
-    console.log(req.body);
+    
     const { from, to, message } = req.body;
     const data = await Messages.create({
       message: { text: message },

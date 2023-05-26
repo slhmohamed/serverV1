@@ -32,7 +32,7 @@ exports.signin = async (req, res) => {
     }
   )
 
-  return res.status(200).send({ token: token })
+  return res.status(200).send({ token: token,role:user.role })
 }
 exports.forgotPasswordController = async (req, res) => {
   try{
